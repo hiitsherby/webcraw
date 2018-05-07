@@ -1,4 +1,4 @@
-var firebase = require("firebase");
+// var firebase = require("firebase");
 
 
 
@@ -6,15 +6,15 @@ var firebase = require("firebase");
 //require("firebase/storage");
 
 // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAvcpURPx5O22GQJHiJUc8yT32PaXLS19U",
-    authDomain: "webcrawl-ae6ad.firebaseapp.com",
-    databaseURL: "https://webcrawl-ae6ad.firebaseio.com",
-    projectId: "webcrawl-ae6ad",
-    storageBucket: "webcrawl-ae6ad.appspot.com",
-    messagingSenderId: "494351860955"
-  };
-  firebase.initializeApp(config);
+  // var config = {
+  //   apiKey: "AIzaSyAvcpURPx5O22GQJHiJUc8yT32PaXLS19U",
+  //   authDomain: "webcrawl-ae6ad.firebaseapp.com",
+  //   databaseURL: "https://webcrawl-ae6ad.firebaseio.com",
+  //   projectId: "webcrawl-ae6ad",
+  //   storageBucket: "webcrawl-ae6ad.appspot.com",
+  //   messagingSenderId: "494351860955"
+  // };
+  // firebase.initializeApp(config);
 
 var express = require('express');
 var app = express();
@@ -23,7 +23,8 @@ var b1, b2, b3, b4, b5, serial, amount, date;
 
 var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
-    until = webdriver.until;
+    until = webdriver.until,
+    Keys = webdriver.Key;    
 
 
 
@@ -37,36 +38,41 @@ var driver = new webdriver.Builder()
 
 // var request = require('request');
 
-driver.get('http://www.taiwanlottery.com.tw/lotto/DailyCash/history.aspx');
-driver.findElement(By.xpath("//*[@id='D539Control_history1_radYM']")).click();
-for (var y=103; y<106;y++){
-driver.findElement(By.xpath("//select[@id='D539Control_history1_dropYear']/option[text()='"+y+"']")).click();
-for (var n=1; n<13; n++){
-    n = n.toString();
-	driver.findElement(By.xpath('//select[@id="D539Control_history1_dropMonth"]/option[text()="'+n+'"]')).click();
-	driver.findElement(By.xpath('//*[@id="D539Control_history1_btnSubmit"]')).click();
-	driver.findElements(By.className("td_hm")).then(function(elements){
-	    elements.reverse().forEach(function (element) {
-	        element.getText().then(function(ele){
-	            // post.push(text);
+driver.get('https://www.woolworths.com.au/');
+var myList = ['yogurt'];
+myList.map(function(item){
+	var input = driver.findElement(By.id('headerSearch'));
+	input.click();
+	driver.executeScript("document.getElementById('headerSearch').setAttribute('value', '"+item+"')");
+	input.sendKeys('value', Keys.ENTER);
+});
 
-						b1 = ele.split(" ")[11].trim();
-						b2 = ele.split(" ")[12].trim();
-						b3 = ele.split(" ")[13].trim();
-						b4 = ele.split(" ")[14].trim();
-						b5 = ele.split(" ")[15].trim().slice(0,2);
+// for (var n=1; n<13; n++){
+//     n = n.toString();
+// 	driver.findElement(By.xpath('//select[@id="D539Control_history1_dropMonth"]/option[text()="'+n+'"]')).click();
+// 	driver.findElement(By.xpath('//*[@id="D539Control_history1_btnSubmit"]')).click();
+// 	driver.findElements(By.className("td_hm")).then(function(elements){
+// 	    elements.reverse().forEach(function (element) {
+// 	        element.getText().then(function(ele){
+// 	            // post.push(text);
 
-						serial = ele.split(" ")[2].trim().slice(3);
-						amount = ele.split(" ")[21].trim().slice(3,13);
-						date = ele.split(" ")[3].trim().slice(3);
+// 						b1 = ele.split(" ")[11].trim();
+// 						b2 = ele.split(" ")[12].trim();
+// 						b3 = ele.split(" ")[13].trim();
+// 						b4 = ele.split(" ")[14].trim();
+// 						b5 = ele.split(" ")[15].trim().slice(0,2);
+
+// 						serial = ele.split(" ")[2].trim().slice(3);
+// 						amount = ele.split(" ")[21].trim().slice(3,13);
+// 						date = ele.split(" ")[3].trim().slice(3);
 
 
 
 
-	        			console.log(serial);
-	        			console.log(b1,b2,b3,b4,b5);
-	        			console.log(amount);
-	        			console.log(date);
+// 	        			console.log(serial);
+// 	        			console.log(b1,b2,b3,b4,b5);
+// 	        			console.log(amount);
+// 	        			console.log(date);
 
 	      //   			  firebase.database().ref('q1/').push({
 						 //    serial: serial,	
@@ -78,17 +84,17 @@ for (var n=1; n<13; n++){
 
 
 
-	        });
-	    });
-	});
+	//         });
+	//     });
+	// });
 
 
 
     	
-}//for n
-}//for y
+// }//for n
+// }//for y
 
-driver.quit();
+// driver.quit();
 
 
 
@@ -137,7 +143,7 @@ driver.quit();
 
 
 app.get('/', function (req, res) {
-  res.send(post);
+  res.send();
 });
 
 // })//request

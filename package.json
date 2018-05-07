@@ -26,6 +26,7 @@
     "eventproxy": "^0.3.4",
     "express": "^4.9.5",
     "firebase": "^4.3.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "superagent": "^2.0.0"
   }
 }

@@ -41,10 +41,10 @@ var driver = new webdriver.Builder()
 driver.get('https://www.woolworths.com.au/');
 var myList = ['yogurt'];
 myList.map(function(item){
-	var input = driver.findElement(By.id('headerSearch'));
+	var input = driver.find_element_by_id('headerSearch');
 	input.click();
-	driver.executeScript("document.getElementById('headerSearch').setAttribute('value', '"+item+"')");
-	input.sendKeys('value', Keys.ENTER);
+	input.sendKeys(item);
+	input.sendKeys(Keys.ENTER);
 });
 
 // for (var n=1; n<13; n++){

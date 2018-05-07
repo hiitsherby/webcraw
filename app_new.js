@@ -31,20 +31,27 @@ var webdriver = require('selenium-webdriver'),
 app.listen(5000, function () {
   console.log('app listening on port 5000!');
 });
+require('chromedriver');
+
 
 var driver = new webdriver.Builder()
     .forBrowser('chrome')
     .build();
 
 // var request = require('request');
-
+var product_list = [];
 driver.get('https://www.woolworths.com.au/');
 var myList = ['yogurt'];
 myList.map(function(item){
-	var input = driver.find_element_by_id('headerSearch');
+	var input = driver.findElement(By.id('headerSearch'));
 	input.click();
 	input.sendKeys(item);
 	input.sendKeys(Keys.ENTER);
+
+  // keys won't enter with this
+  driver.findElements(By.className('has_header')).then(function(item_with_header){
+    product_list.push(item_with_header);
+  });
 });
 
 // for (var n=1; n<13; n++){
@@ -143,7 +150,7 @@ myList.map(function(item){
 
 
 app.get('/', function (req, res) {
-  res.send();
+  res.send(product_list);
 });
 
 // })//request

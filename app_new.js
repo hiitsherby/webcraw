@@ -43,13 +43,24 @@ var driver = new webdriver.Builder()
 var product_list = [];
 driver.get('https://www.woolworths.com.au/');
 var myList = ['yogurt'];
-myList.map(function(item){
-	var input = driver.findElement(By.xpath('//*[@id="headerSearch"]'));
-	input.click();
-	input.sendKeys(item);
-  driver.findElement(By.className('headerSearch-autocompleteSearchButton')).click();
+myList.map(item => {
+  loadItemPage(item);
+  scapeHtml();
 });
 
+function loadItemPage(item){
+  var input = driver.findElement(By.xpath('//*[@id="headerSearch"]'));
+  input.click();
+  input.sendKeys(item);
+  driver.findElement(By.className('headerSearch-autocompleteSearchButton')).click();
+}
+
+async function scapeHtml(){
+  await loadItemPage();
+  html = driver.page_souce;
+  console.log('html', html);
+  product_list.push(html);
+}
 
 
 app.get('/', function (req, res) {
